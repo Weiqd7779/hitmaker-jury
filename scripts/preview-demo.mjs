@@ -10,7 +10,7 @@ const server = createServer(async (req, res) => {
     const path = new URL(req.url, 'http://localhost').pathname;
     if (path === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const file = path === '/' ? 'index.html' : path.slice(1);
-    if (req.method !== 'GET' || !(['index.html', 'presentation.json', 'demo.wav', 'chain/manifest.json'].includes(file) || /^assets\/[A-Za-z0-9_.-]+$/.test(file) || /^(agents|records)\/[a-f0-9]{64}\/(professor|antisocial|nearmiss)\.json$/.test(file))) { res.writeHead(404); res.end('Not found'); return; }
+    if (req.method !== 'GET' || !(['index.html', 'presentation.json', 'jury-real-reviews.json', 'demo.wav', 'chain/manifest.json'].includes(file) || /^assets\/[A-Za-z0-9_.-]+$/.test(file) || /^(agents|records)\/[a-f0-9]{64}\/(professor|antisocial|nearmiss)\.json$/.test(file))) { res.writeHead(404); res.end('Not found'); return; }
     const bytes = await readFile(join(root, file));
     res.writeHead(200, { 'Content-Type': types[extname(file)] || 'application/octet-stream', 'Content-Length': bytes.length, 'X-Content-Type-Options': 'nosniff' }); res.end(bytes);
   } catch { res.writeHead(404); res.end('Not found'); }

@@ -47,6 +47,8 @@
 
 Public demo 會顯示「音樂評審」情境：Manager 發布工作、四位 Agent 應徵、錄取三位、取得真實 AI 評論、結算報酬。
 
+- **Live Demo**: https://dist-demo-gamma.vercel.app/
+
 ![desktop complete](./docs/images/desktop-complete.png)
 
 ### 3.2 三位專家與真實 AI 交付
@@ -64,7 +66,7 @@ MixMaster（混音）、MelodyFox（作曲）、HitRadar（商業分析）各自
 3. 提交三筆 ERC-8004 評價並支付三筆 0.001 0G 報酬。
 4. 查驗鏈上紀錄、下載離線證據包。
 
-截圖中的「工作報酬結算預覽」為情境 UI；**實際鏈上結算需由使用者以 MetaMask 或 `CAREER_OWNER_PRIVATE_KEY` 授權確認**。
+截圖中的「工作報酬結算預覽」為情境 UI；**實際鏈上結算需由使用者以 MetaMask 或 `CAREER_OWNER_PRIVATE_KEY` 授權確認**。部署腳本會自動把 artifact URI 指向上述 Live Demo 網址，因此結算後任何人都能透過 `npm run verify:erc8004` 離線核對。
 
 ---
 

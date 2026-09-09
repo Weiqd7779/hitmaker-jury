@@ -14,7 +14,7 @@ type PresentationState = { token: string; status: string; running: boolean; keyC
 const readOnly = import.meta.env.PUBLIC_READ_ONLY_DEMO === 'true';
 const stateURL = readOnly ? `${import.meta.env.BASE_URL}presentation.json` : '/api/presentation';
 const audioURL = readOnly ? `${import.meta.env.BASE_URL}demo.wav` : '/api/music.wav';
-const exportURL = readOnly ? `${import.meta.env.BASE_URL}presentation.json` : '/api/presentation/export';
+const exportURL = readOnly ? `${import.meta.env.BASE_URL}jury-real-reviews.json` : '/api/presentation/export';
 const stages = ['準備開始', 'Music Manager 發布工作', '四位候選主動應徵', '查看分版本履歷', '錄取三位專家', '音樂評審開始', '交付專業評論', 'Manager 接受成果', '工作報酬結算', '累積可攜職涯'];
 const samples: Record<WorkerKey, Review> = {
   professor: { score: 78, headline: '讓聲音的層次與個性同時清楚', critique: 'G 與 A 的偏移可以形成鮮明的聲音張力。建議透過音量與層次安排，讓旋律的輪廓更聚焦。' },

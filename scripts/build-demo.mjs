@@ -30,7 +30,9 @@ try {
   await build({ root: fileURLToPath(new URL('../', import.meta.url)), base: './', publicDir: false, define: { 'import.meta.env.PUBLIC_READ_ONLY_DEMO': JSON.stringify('true') }, build: { outDir: 'dist-demo', emptyOutDir: true } });
   await mkdir(new URL('../dist-demo/chain/', import.meta.url), { recursive: true });
   await writeFile(new URL('../dist-demo/chain/manifest.json', import.meta.url), json(output.manifest));
+  await writeFile(new URL('../public/jury-real-reviews.json', import.meta.url), json(output.records));
   await writeFile(new URL('../dist-demo/presentation.json', import.meta.url), data);
+  await writeFile(new URL('../dist-demo/jury-real-reviews.json', import.meta.url), json(output.records));
   await writeFile(new URL('../dist-demo/demo.wav', import.meta.url), fixedAudio());
   await cp(new URL('../public/records/', import.meta.url), new URL('../dist-demo/records/', import.meta.url), { recursive: true });
   await cp(new URL('../public/agents/', import.meta.url), new URL('../dist-demo/agents/', import.meta.url), { recursive: true });
