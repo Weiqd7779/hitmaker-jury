@@ -35,7 +35,13 @@ export function ERC8004Panel({ readOnly, onVerified }: { readOnly: boolean; onVe
       try {
         const response = await fetch(readOnly ? `${import.meta.env.BASE_URL}chain/manifest.json` : '/api/chain/manifest');
         const data = await response.json();
-        if (active && data.schema === 'jury-erc8004-manifest-v1') setManifest(data);
+        if (active && data.schema === 'jury-erc8004-manifest-v1') {
+          setManifest(data);
+          if (data.manager) {
+            try { update(await inspectManager(publicProvider, data.manager, data)); }
+            catch (err) { if (active) setMessage('鏈上查驗失敗：' + ((err as { shortMessage?: string }).shortMessage || (err as Error).message)); }
+          }
+        }
       } catch { if (active) setMessage('請重新載入鏈上工作資料'); }
     };
     void load(); const timer = readOnly ? null : setInterval(() => void load(), 5000);

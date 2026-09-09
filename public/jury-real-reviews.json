@@ -1,1 +1,89 @@
-[{"schema":"verifiable-agent-career/work-v1","job":"Music Jury #031","agent":"MixMaster","role":"Mixing Specialist","workerKey":"professor","model":"qwen2.5-omni","source":"0G Compute Router","router":"https://router-api-testnet.integratenetwork.work/v1","requestId":"fb3edace-df1c-4525-a8f3-98ce72e7e782","receivedAt":"2026-09-09T11:37:01.947Z","input":{"name":"走音小星星 · Career Session","duration":15,"source":"deterministic-synthesis-v1","analysisSource":"預先準備的展示描述，非現場量測，未經 TEE 驗證","notes":"合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。","audioHash":"0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"},"review":{"score":85,"headline":"音準微妙偏移","critique":"合成小星星旋律的三次重複中，G音偏低和A音偏高的音準變化為旋律帶來了一種獨特的音樂趣味。這種刻意的音準偏移不僅增加了旋律的辨識度，還賦予了它一種刻意的美感，使聽者在熟悉的小星星旋律中發現新的聆聽樂趣。"},"rawContent":"{\n  \"score\": 85,\n  \"headline\": \"音準微妙偏移\",\n  \"critique\": \"合成小星星旋律的三次重複中，G音偏低和A音偏高的音準變化為旋律帶來了一種獨特的音樂趣味。這種刻意的音準偏移不僅增加了旋律的辨識度，還賦予了它一種刻意的美感，使聽者在熟悉的小星星旋律中發現新的聆聽樂趣。\"\n}\n","contentHash":"0xeecf3be0b552feefe004511377be9382caf25e91493242f542351e68949692c3","routerVerification":true,"billedCost0G":"0.00069479"},{"schema":"verifiable-agent-career/work-v1","job":"Music Jury #031","agent":"MelodyFox","role":"Composition Specialist","workerKey":"antisocial","model":"qwen2.5-omni","source":"0G Compute Router","router":"https://router-api-testnet.integratenetwork.work/v1","requestId":"8241ab65-e900-4e56-9ad8-62bc73e0a86a","receivedAt":"2026-09-09T11:37:03.749Z","input":{"name":"走音小星星 · Career Session","duration":15,"source":"deterministic-synthesis-v1","analysisSource":"預先準備的展示描述，非現場量測，未經 TEE 驗證","notes":"合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。","audioHash":"0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"},"review":{"score":85,"headline":"旋律的獨特與張力","critique":"旋律輪廓清晰，三次重複結構強調了音樂的韻律感。G音偏低和A音偏高的刻意偏移增加了旋律的辨識度和張力，使整首曲子更具個性化和情感深度。"},"rawContent":"{\n  \"score\": 85,\n  \"headline\": \"旋律的獨特與張力\",\n  \"critique\": \"旋律輪廓清晰，三次重複結構強調了音樂的韻律感。G音偏低和A音偏高的刻意偏移增加了旋律的辨識度和張力，使整首曲子更具個性化和情感深度。\"\n}\n","contentHash":"0x509b30bb5e0ce2aebf6ed713bdbf437cc06c6fcec6263e6c926152c71436923a","routerVerification":true,"billedCost0G":"0.00060655"},{"schema":"verifiable-agent-career/work-v1","job":"Music Jury #031","agent":"HitRadar","role":"Commercial Music Analyst","workerKey":"nearmiss","model":"qwen2.5-omni","source":"0G Compute Router","router":"https://router-api-testnet.integratenetwork.work/v1","requestId":"0138bd96-10a0-4e79-8654-dbda880208f7","receivedAt":"2026-09-09T11:37:05.682Z","input":{"name":"走音小星星 · Career Session","duration":15,"source":"deterministic-synthesis-v1","analysisSource":"預先準備的展示描述，非現場量測，未經 TEE 驗證","notes":"合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。","audioHash":"0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"},"review":{"score":85,"headline":"獨特的旋律表現","critique":"合成小星星旋律的重複呈現創造了一種既熟悉又新奇的感覺。G音偏低和A音偏高的音準調整為旋律增添了一絲不尋常的美感，這種刻意的偏移可能吸引那些對音樂細節敏感且喜愛探索不同樂器表現的聽眾。"},"rawContent":"{\n  \"score\": 85,\n  \"headline\": \"獨特的旋律表現\",\n  \"critique\": \"合成小星星旋律的重複呈現創造了一種既熟悉又新奇的感覺。G音偏低和A音偏高的音準調整為旋律增添了一絲不尋常的美感，這種刻意的偏移可能吸引那些對音樂細節敏感且喜愛探索不同樂器表現的聽眾。\"\n}\n","contentHash":"0x422d27b01570ea8088cb38f95e202d3d76321df02545263a4c2870d89d43ed35","routerVerification":true,"billedCost0G":"0.00065545"}]
+[
+  {
+    "schema": "verifiable-agent-career/work-v1",
+    "job": "Music Jury #031",
+    "agent": "MixMaster",
+    "role": "Mixing Specialist",
+    "workerKey": "professor",
+    "model": "qwen2.5-omni",
+    "source": "0G Compute Router",
+    "router": "https://router-api-testnet.integratenetwork.work/v1",
+    "requestId": "fb3edace-df1c-4525-a8f3-98ce72e7e782",
+    "receivedAt": "2026-09-09T11:37:01.947Z",
+    "input": {
+      "name": "走音小星星 · Career Session",
+      "duration": 15,
+      "source": "deterministic-synthesis-v1",
+      "analysisSource": "預先準備的展示描述，非現場量測，未經 TEE 驗證",
+      "notes": "合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。",
+      "audioHash": "0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"
+    },
+    "review": {
+      "score": 85,
+      "headline": "音準微妙偏移",
+      "critique": "合成小星星旋律的三次重複中，G音偏低和A音偏高的音準變化為旋律帶來了一種獨特的音樂趣味。這種刻意的音準偏移不僅增加了旋律的辨識度，還賦予了它一種刻意的美感，使聽者在熟悉的小星星旋律中發現新的聆聽樂趣。"
+    },
+    "rawContent": "{\n  \"score\": 85,\n  \"headline\": \"音準微妙偏移\",\n  \"critique\": \"合成小星星旋律的三次重複中，G音偏低和A音偏高的音準變化為旋律帶來了一種獨特的音樂趣味。這種刻意的音準偏移不僅增加了旋律的辨識度，還賦予了它一種刻意的美感，使聽者在熟悉的小星星旋律中發現新的聆聽樂趣。\"\n}\n",
+    "contentHash": "0xeecf3be0b552feefe004511377be9382caf25e91493242f542351e68949692c3",
+    "routerVerification": true,
+    "billedCost0G": "0.00069479"
+  },
+  {
+    "schema": "verifiable-agent-career/work-v1",
+    "job": "Music Jury #031",
+    "agent": "MelodyFox",
+    "role": "Composition Specialist",
+    "workerKey": "antisocial",
+    "model": "qwen2.5-omni",
+    "source": "0G Compute Router",
+    "router": "https://router-api-testnet.integratenetwork.work/v1",
+    "requestId": "8241ab65-e900-4e56-9ad8-62bc73e0a86a",
+    "receivedAt": "2026-09-09T11:37:03.749Z",
+    "input": {
+      "name": "走音小星星 · Career Session",
+      "duration": 15,
+      "source": "deterministic-synthesis-v1",
+      "analysisSource": "預先準備的展示描述，非現場量測，未經 TEE 驗證",
+      "notes": "合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。",
+      "audioHash": "0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"
+    },
+    "review": {
+      "score": 85,
+      "headline": "旋律的獨特與張力",
+      "critique": "旋律輪廓清晰，三次重複結構強調了音樂的韻律感。G音偏低和A音偏高的刻意偏移增加了旋律的辨識度和張力，使整首曲子更具個性化和情感深度。"
+    },
+    "rawContent": "{\n  \"score\": 85,\n  \"headline\": \"旋律的獨特與張力\",\n  \"critique\": \"旋律輪廓清晰，三次重複結構強調了音樂的韻律感。G音偏低和A音偏高的刻意偏移增加了旋律的辨識度和張力，使整首曲子更具個性化和情感深度。\"\n}\n",
+    "contentHash": "0x509b30bb5e0ce2aebf6ed713bdbf437cc06c6fcec6263e6c926152c71436923a",
+    "routerVerification": true,
+    "billedCost0G": "0.00060655"
+  },
+  {
+    "schema": "verifiable-agent-career/work-v1",
+    "job": "Music Jury #031",
+    "agent": "HitRadar",
+    "role": "Commercial Music Analyst",
+    "workerKey": "nearmiss",
+    "model": "qwen2.5-omni",
+    "source": "0G Compute Router",
+    "router": "https://router-api-testnet.integratenetwork.work/v1",
+    "requestId": "0138bd96-10a0-4e79-8654-dbda880208f7",
+    "receivedAt": "2026-09-09T11:37:05.682Z",
+    "input": {
+      "name": "走音小星星 · Career Session",
+      "duration": 15,
+      "source": "deterministic-synthesis-v1",
+      "analysisSource": "預先準備的展示描述，非現場量測，未經 TEE 驗證",
+      "notes": "合成小星星旋律，重複三次。G 音約偏低 40 音分，A 音約偏高 65 音分。請討論音準、辨識度與刻意偏移的可能美感。",
+      "audioHash": "0x72a0abce2f2e9ae940694380018bec609a6e729d8004a16ac28b97db2c198d00"
+    },
+    "review": {
+      "score": 85,
+      "headline": "獨特的旋律表現",
+      "critique": "合成小星星旋律的重複呈現創造了一種既熟悉又新奇的感覺。G音偏低和A音偏高的音準調整為旋律增添了一絲不尋常的美感，這種刻意的偏移可能吸引那些對音樂細節敏感且喜愛探索不同樂器表現的聽眾。"
+    },
+    "rawContent": "{\n  \"score\": 85,\n  \"headline\": \"獨特的旋律表現\",\n  \"critique\": \"合成小星星旋律的重複呈現創造了一種既熟悉又新奇的感覺。G音偏低和A音偏高的音準調整為旋律增添了一絲不尋常的美感，這種刻意的偏移可能吸引那些對音樂細節敏感且喜愛探索不同樂器表現的聽眾。\"\n}\n",
+    "contentHash": "0x422d27b01570ea8088cb38f95e202d3d76321df02545263a4c2870d89d43ed35",
+    "routerVerification": true,
+    "billedCost0G": "0.00065545"
+  }
+]

@@ -76,5 +76,5 @@ try {
   assert.ok(await page.getByRole('dialog').evaluate(el => el.scrollWidth <= el.clientWidth + 1));
   await page.keyboard.press('Escape');
   assert.deepEqual(consoleErrors, []); assert.deepEqual(failures, []);
-  console.log(JSON.stringify({ ok: true, screenshots: directory, realInferenceStatus: afterReplay.status, attempts: afterReplay.attempts, savedReviews: afterReplay.entries.filter(e => e.status === 'completed').length, replaysWithoutNewRequests: 2, billedCosts0G: afterReplay.entries.map(e => e.billedCost0G), chainTransactions: 'not performed; settlement explicitly simulated', posts, consoleErrors, failures }, null, 2));
+  console.log(JSON.stringify({ ok: true, screenshots: directory, realInferenceStatus: afterReplay.status, attempts: afterReplay.attempts, savedReviews: afterReplay.entries.filter(e => e.status === 'completed').length, replaysWithoutNewRequests: 2, billedCosts0G: afterReplay.entries.map(e => e.billedCost0G), chainTransactions: afterReplay.chainTransactions || 'not performed; settlement explicitly simulated', posts, consoleErrors, failures }, null, 2));
 } finally { await browser.close(); }

@@ -66,7 +66,21 @@ MixMaster（混音）、MelodyFox（作曲）、HitRadar（商業分析）各自
 3. 提交三筆 ERC-8004 評價並支付三筆 0.001 0G 報酬。
 4. 查驗鏈上紀錄、下載離線證據包。
 
-截圖中的「工作報酬結算預覽」為情境 UI；**實際鏈上結算需由使用者以 MetaMask 或 `CAREER_OWNER_PRIVATE_KEY` 授權確認**。部署腳本會自動把 artifact URI 指向上述 Live Demo 網址，因此結算後任何人都能透過 `npm run verify:erc8004` 離線核對。
+本專案的 PoC 已完成真實鏈上結算：
+
+- **Music Manager 合約**：`0x4059dc2A92417f049411546c106FC6E0419c7B0e`
+- **部署交易**：`0x2345db3e5ff8fae20fb576efdb4ef2c2ab879bd6eac3eef711a1d061a34e5269`
+- **結算交易**：`0xb108a2edd32e835f9b365a2b7e78d99a2cac610acada9744742b6cc382c0656a`
+- **Agent ID**：MixMaster `#397`、MelodyFox `#398`、HitRadar `#399`
+- **每位 Worker 報酬**：`0.001 0G`，已寫入 ERC-8004 Reputation Registry
+
+任何人都能透過以下指令離線核對：
+
+```bash
+npm run verify:erc8004 -- 0x4059dc2A92417f049411546c106FC6E0419c7B0e https://dist-demo-gamma.vercel.app/chain/manifest.json
+```
+
+如果你想自己重新部署與結算，可參考 [5.3 節](#53-部署到-galileo) 設定 `CAREER_OWNER_PRIVATE_KEY` 並執行 `npm run deploy:galileo`。
 
 ---
 
