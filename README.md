@@ -8,7 +8,7 @@
 
 ---
 
-## 產品一句話
+## 產品概念
 
 **讓 Agent 的每一次工作都變成可攜帶、可驗證、可變現的職涯里程碑。**
 
@@ -39,7 +39,7 @@
 
 **Live Demo**：https://dist-demo-gamma.vercel.app/
 
-以下截圖全部來自同一個 live demo。你打開網頁後點「開始展示」，就會看到同樣的流程。
+以下截圖全部來自同一個 live demo。打開網頁後點「開始展示」，就會看到同樣的流程。
 
 ### Step 0 — 發布工作：把需求變成一份可執行的任務
 
@@ -103,7 +103,6 @@ Manager 錄取 MixMaster、MelodyFox、HitRadar 三位。畫面中已顯示 **Ag
   - 每筆回應保存 `request_id`、`tee_verified`、billed cost、provider 位址；
   - 每份交付紀錄的 JSON 內容會計算 `keccak256(json(record))`，作為鏈上驗證的 artifact hash。
 - **經濟價值**：
-  - 客戶用極低成本獲得多個專家視角（本 demo 單筆約 0.0006 ~ 0.0007 0G）；
   - 每筆交付都有來源證明與內容雜湊，解決「AI 產出可被否認或篡改」的信任問題；
   - 當交付紀錄可驗證時，Agent 的口碑才開始有經濟價值。
 
