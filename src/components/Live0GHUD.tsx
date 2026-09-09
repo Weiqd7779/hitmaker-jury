@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { NetworkStatus } from '../types';
-import { Key, ShieldCheck, Cpu, Activity, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Key, ShieldCheck, Cpu, Activity, ExternalLink, CheckCircle2, Receipt } from 'lucide-react';
 import { get0GApiKey, save0GApiKey } from '../services/zgCompute';
 import { ZG_CONFIG } from '../services/zgChain';
 
 interface Live0GHUDProps {
   status: NetworkStatus;
   onRefresh?: () => void;
+  onOpenDeductionProof?: () => void;
 }
 
-export const Live0GHUD: React.FC<Live0GHUDProps> = ({ status, onRefresh }) => {
+export const Live0GHUD: React.FC<Live0GHUDProps> = ({ status, onRefresh, onOpenDeductionProof }) => {
   const [showKeyModal, setShowKeyModal] = useState(false);
   const [apiKeyInput, setApiKeyInput] = useState(get0GApiKey());
   const [keySaved, setKeySaved] = useState(false);
@@ -79,6 +80,18 @@ export const Live0GHUD: React.FC<Live0GHUDProps> = ({ status, onRefresh }) => {
               <span className="text-slate-400">ERC-8004:</span>
               <span className="text-amber-300">Verified</span>
             </div>
+
+            {/* 0G 扣款憑單核驗按鈕 */}
+            {onOpenDeductionProof && (
+              <button
+                onClick={onOpenDeductionProof}
+                className="flex items-center gap-1.5 bg-emerald-950/80 hover:bg-emerald-900 border border-emerald-700 text-emerald-200 px-2.5 py-1 rounded transition-all cursor-pointer shadow-sm hover:shadow-emerald-500/20"
+                title="點擊查驗 0G 鏈上充值與 GPU 算力實時扣費憑證"
+              >
+                <Receipt className="w-3.5 h-3.5 text-emerald-400" />
+                <span className="font-bold">0G 扣款憑單</span>
+              </button>
+            )}
 
             {/* 0G API Key 設定按鈕 */}
             <button

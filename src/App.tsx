@@ -4,11 +4,12 @@ import { ExecutiveCommandBar } from './components/ExecutiveCommandBar';
 import { HitmakerStage } from './components/HitmakerStage';
 import { VerifiableProofDrawer } from './components/VerifiableProofDrawer';
 import { ServeProofReviewModal } from './components/ServeProofReviewModal';
+import { DeductionProofModal } from './components/DeductionProofModal';
 import { AudioAnalysis, StageStep, SingleJudgeReview, ProducerVerdict, NetworkStatus } from './types';
 import { PRESET_OFF_PITCH_STAR, playTrack, stopAudio } from './services/audioAnalyzer';
 import { fetch0GNetworkStatus } from './services/zgChain';
 import { executeJudgeReviews, executeProducerSynthesis } from './services/zgCompute';
-import { Award, TrendingUp, ShieldCheck, FileCheck, Coins, Sparkles, ExternalLink, RefreshCw } from 'lucide-react';
+import { Award, TrendingUp, ShieldCheck, FileCheck, Coins, Sparkles, ExternalLink, RefreshCw, Receipt } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const App: React.FC = () => {
@@ -36,6 +37,7 @@ export const App: React.FC = () => {
   const [verdict, setVerdict] = useState<ProducerVerdict | null>(null);
   const [selectedCharacter, setSelectedCharacter] = useState<string | null>(null);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showDeductionModal, setShowDeductionModal] = useState(false);
 
   // 定期更新真實 0G 測試網狀態
   useEffect(() => {
@@ -171,7 +173,8 @@ export const App: React.FC = () => {
       {/* 頂部即時 0G 狀態欄 */}
       <Live0GHUD 
         status={networkStatus} 
-        onRefresh={() => fetch0GNetworkStatus().then(setNetworkStatus)} 
+        onRefresh={() => fetch0GNetworkStatus().then(setNetworkStatus)}
+        onOpenDeductionProof={() => setShowDeductionModal(true)}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
@@ -200,6 +203,7 @@ export const App: React.FC = () => {
           playbackProgress={playbackProgress}
           currentTimeSec={currentTimeSec}
           audioDuration={currentAudio.duration || 8.5}
+          onOpenDeductionProof={() => setShowDeductionModal(true)}
         />
 
         {/* 幕 6 & 7：王牌經紀人戰略復盤報告 (Executive Verdict) */}
@@ -217,13 +221,21 @@ export const App: React.FC = () => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2.5">
+                <button
+                  onClick={() => setShowDeductionModal(true)}
+                  className="px-4 py-2.5 rounded-xl bg-emerald-950/90 hover:bg-emerald-900 border border-emerald-600 text-emerald-200 text-xs cursor-pointer flex items-center gap-1.5 font-bold transition-all shadow-sm"
+                  title="查看本次 0G 充值與算力實打實扣款憑單"
+                >
+                  <Receipt className="w-4 h-4 text-emerald-400" />
+                  <span>🧾 查驗 0G 扣款憑單</span>
+                </button>
                 <button
                   onClick={() => setShowReviewModal(true)}
                   className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-purple-600 hover:from-amber-400 hover:to-purple-500 text-slate-950 font-bold text-xs cursor-pointer shadow-lg shadow-purple-900/30 flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4 text-slate-950" />
-                  <span>⭐ 憑服務證明提交鏈上評價</span>
+                  <span>⭐ 憑服務證明提交評價</span>
                 </button>
                 <button
                   onClick={handleReset}
@@ -319,6 +331,15 @@ export const App: React.FC = () => {
           onSubmitReview={() => setStage('reviewed')}
         />
       )}
+
+      {/* 0G 扣款憑單與結算核驗彈窗 (Deduction Proof Modal) */}
+      <DeductionProofModal
+        isOpen={showDeductionModal}
+        onClose={() => setShowDeductionModal(false)}
+        budget={budget}
+        producerCommission={verdict ? verdict.producerCommission : Math.max(0, parseFloat((budget - 0.024).toFixed(3)))}
+        reviews={reviews}
+      />
 
       {/* 底部頁尾 */}
       <footer className="bg-slate-950 border-t border-slate-900 py-4 px-6 text-center text-xs text-slate-500">

@@ -2,7 +2,7 @@ import React from 'react';
 import { PixelAvatar, AvatarMotion } from './PixelAvatar';
 import { StageStep, SingleJudgeReview, JudgeProfile } from '../types';
 import { JUDGES_DATA } from '../services/zgCompute';
-import { ShieldCheck, Coins, Sparkles, Building2, FileCheck2, ArrowRight, Search, UserX, Radar } from 'lucide-react';
+import { ShieldCheck, Coins, Sparkles, Building2, FileCheck2, ArrowRight, Search, UserX, Radar, Receipt } from 'lucide-react';
 
 interface HitmakerStageProps {
   stage: StageStep;
@@ -15,6 +15,7 @@ interface HitmakerStageProps {
   playbackProgress?: number; // 0 to 100
   currentTimeSec?: number;
   audioDuration?: number;
+  onOpenDeductionProof?: () => void;
 }
 
 export const HitmakerStage: React.FC<HitmakerStageProps> = ({
@@ -27,7 +28,8 @@ export const HitmakerStage: React.FC<HitmakerStageProps> = ({
   listeningPhase = 0,
   playbackProgress = 0,
   currentTimeSec = 0,
-  audioDuration = 8.5
+  audioDuration = 8.5,
+  onOpenDeductionProof
 }) => {
   // 取得特定評審在當前階段的動態與對話（隨音樂進度動態演變）
   const getJudgeMotion = (judgeId: string): AvatarMotion => {
@@ -160,6 +162,16 @@ export const HitmakerStage: React.FC<HitmakerStageProps> = ({
           <span className="flex items-center gap-1 bg-emerald-950/80 text-emerald-300 px-1.5 py-0.5 rounded border border-emerald-800 text-[10px]">
             經紀佣金 +{producerCommission.toFixed(3)} 0G
           </span>
+          {onOpenDeductionProof && (
+            <button
+              onClick={onOpenDeductionProof}
+              className="flex items-center gap-1 bg-emerald-950 hover:bg-emerald-900 text-emerald-300 px-2 py-0.5 rounded border border-emerald-700 text-[10px] cursor-pointer transition-colors shadow-sm font-sans"
+              title="查驗 0G 充值與 GPU 算力扣款存證"
+            >
+              <Receipt className="w-3 h-3 text-emerald-400" />
+              <span>查驗扣款憑單</span>
+            </button>
+          )}
         </div>
       </div>
 
