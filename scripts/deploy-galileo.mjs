@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
-import { AbiCoder, Contract, ContractFactory, JsonRpcProvider, Wallet, keccak256, parseEther, toUtf8Bytes } from 'ethers';
+import { AbiCoder, Contract, ContractFactory, JsonRpcProvider, Wallet, formatEther, keccak256, parseEther, toUtf8Bytes } from 'ethers';
 import { compileContracts } from './compile-contracts.mjs';
 
 const [siteUrlRaw, resumeFile] = process.argv.slice(2);
@@ -57,10 +57,14 @@ async function ensureFiles({ version, jsonText, workers }) {
   }
 }
 
-async function gasSettings() {
-  const price = await provider.send('eth_gasPrice', []);
-  const gasPrice = BigInt(price) > 2000000000n ? BigInt(price) : 2000000000n;
-  return { gasPrice };
+async function gasSettings(valueWei = 0n) {
+  const suggested = await provider.send('eth_gasPrice', []);
+  const min = 2000000000n;
+  const configured = process.env.GAS_PRICE_GWEI ? BigInt(parseFloat(process.env.GAS_PRICE_GWEI) * 1e9) : 0n;
+  const gasPrice = configured > 0n ? (configured < min ? min : configured) : (BigInt(suggested) > min ? BigInt(suggested) : min);
+  const balance = await provider.getBalance(owner.address);
+  if (valueWei > balance) throw new Error(`Balance ${formatEther(balance)} 0G is less than required value ${formatEther(valueWei)} 0G`);
+  return { gasPrice, balance };
 }
 
 function explorer(type, value) { return `https://chainscan-galileo.0g.ai/${type}/${value}`; }
@@ -71,12 +75,13 @@ const context = receipt.context || await loadSnapshot();
 await ensureFiles(context);
 
 if (!receipt.deploymentHash) {
-  const balance = await provider.getBalance(owner.address);
   const factory = new ContractFactory(contracts.CareerJury.abi, contracts.CareerJury.bytecode, owner);
   const deployTx = await factory.getDeployTransaction(context.agentURIs, context.recordURIs, context.hashes, context.jobHash, context.model);
   const estimate = await provider.estimateGas({ ...deployTx, from: owner.address });
   const gas = estimate * 130n / 100n;
-  const { gasPrice } = await gasSettings();
+  const { gasPrice, balance } = await gasSettings();
+  const maxDeployCost = gas * gasPrice;
+  if (maxDeployCost > balance) throw new Error(`Insufficient balance for deployment: need up to ${formatEther(maxDeployCost)} 0G for gas, but balance is ${formatEther(balance)} 0G. Set GAS_PRICE_GWEI=2 or top up the wallet.`);
   const tx = await factory.deploy(context.agentURIs, context.recordURIs, context.hashes, context.jobHash, context.model, { gasLimit: gas, gasPrice });
   const deployed = await tx.waitForDeployment();
   receipt.manager = await deployed.getAddress();
@@ -88,8 +93,13 @@ if (!receipt.deploymentHash) {
 
 if (!receipt.settlementHash) {
   const manager = new Contract(receipt.manager, contracts.CareerJury.abi, owner);
-  const { gasPrice } = await gasSettings();
-  const settleTx = await manager.settle({ value: parseEther('0.003'), gasPrice });
+  const valueWei = parseEther('0.003');
+  const { gasPrice, balance } = await gasSettings(valueWei);
+  const estimate = await provider.estimateGas({ to: receipt.manager, data: manager.interface.encodeFunctionData('settle'), from: owner.address, value: valueWei });
+  const gas = estimate * 130n / 100n;
+  const maxSettleCost = gas * gasPrice + valueWei;
+  if (maxSettleCost > balance) throw new Error(`Insufficient balance for settlement: need up to ${formatEther(maxSettleCost)} 0G, but balance is ${formatEther(balance)} 0G.`);
+  const settleTx = await manager.settle({ value: valueWei, gasLimit: gas, gasPrice });
   const mined = await settleTx.wait();
   receipt.settlementHash = mined.hash;
   receipt.settledAt = new Date().toISOString();
