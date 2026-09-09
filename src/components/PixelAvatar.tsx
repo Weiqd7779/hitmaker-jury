@@ -5,6 +5,7 @@ export type AvatarMotion = 'idle' | 'furious' | 'groove' | 'jitter' | 'slam' | '
 
 interface PixelAvatarProps {
   character: AvatarCharacter;
+  label?: string;
   motion?: AvatarMotion;
   size?: 'sm' | 'md' | 'lg' | 'xl';
   showSpeech?: boolean;
@@ -18,6 +19,7 @@ interface PixelAvatarProps {
 
 export const PixelAvatar: React.FC<PixelAvatarProps> = ({
   character,
+  label,
   motion = 'idle',
   size = 'md',
   showSpeech = false,
@@ -302,11 +304,7 @@ export const PixelAvatar: React.FC<PixelAvatarProps> = ({
       {/* 角色名牌與身份標籤 */}
       <div className="mt-2 text-center">
         <span className="inline-block px-2 py-0.5 rounded text-[10px] font-pixel tracking-wider bg-slate-900 border border-slate-700 text-slate-200">
-          {character === 'producer' && 'PRODUCER AGENT'}
-          {character === 'professor' && 'PROFESSOR #014'}
-          {character === 'antisocial' && 'ANTI-SOCIAL #207'}
-          {character === 'nearmiss' && 'NEAR-MISS #031'}
-          {character === 'candidate' && 'POP CRITIC #088'}
+          {label || (character === 'producer' ? 'PRODUCER AGENT' : character === 'professor' ? 'PROFESSOR #014' : character === 'antisocial' ? 'ANTI-SOCIAL #207' : character === 'nearmiss' ? 'NEAR-MISS #031' : 'POP CRITIC #088')}
         </span>
       </div>
     </div>

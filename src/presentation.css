@@ -1,0 +1,99 @@
+.presentation-app .avatar-stage{padding-top:38px;height:226px}
+.presentation-app .career-hero h1 span{color:#ffd43b}
+.presentation-app .primary-button,.presentation-app .brand-icon{background:#ffd43b;border-color:#ffd43b;color:#17170d}
+.presentation-app .hero-tags span{color:#f7da72;border-color:#6b5f30}
+.presentation-app .worker-topline,.presentation-app .worker-pitch,.presentation-app .candidate-row p{color:#e9edf4}
+.presentation-app .career-counts span{display:block;font-size:11px;color:#ecf1e4}
+.network-link{color:#ffe78a;border:1px solid #7c6930;border-radius:6px;padding:6px 10px;font-size:12px}
+.source-chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.source-chips span{border:1px solid #6b6034;background:#292619;color:#f5dd8f;padding:6px 11px;border-radius:5px;font-size:11px}
+.agent-id{display:flex;align-items:center;gap:6px;color:#ffe58b;font-size:12px;margin:16px 0}
+.prepare-reviews{padding:10px 14px;border:1px solid #a08b45;border-radius:7px;color:#ffe18a;margin-top:15px}
+.session-heading>div>p{margin-top:8px;font-size:13px;color:#e2e7ef}
+.trust-primitives{display:flex;flex-wrap:wrap;gap:8px;padding:18px}
+.trust-primitives span{font-size:10px;color:#f8dd7e;border:1px solid #5e5637;border-radius:4px;padding:5px 7px}
+.proof-states{padding:0 18px 15px}.proof-states>div{display:flex;justify-content:space-between;gap:8px;padding:12px 0;border-bottom:1px solid #36404e;font-size:11px}.proof-states button,.proof-states span{color:#ffdf72}
+.event-source{color:#d7e2ef;font-size:10px}.saved-entry code{grid-column:1/-1;overflow-wrap:anywhere;font-size:10px;color:#d4e1ee;margin:9px 0}
+.chain-actions{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.chain-actions button,.chain-lookup button,.pending-transaction button{border:1px solid #8b7736;background:#292619;color:#ffe38a;border-radius:6px;padding:10px 12px;font-size:12px}
+.chain-message{color:#ffdc7c;font-size:12px;margin:14px 0;overflow-wrap:anywhere}
+.chain-lookup{padding-top:18px}.chain-lookup summary{color:#dbe7f5;cursor:pointer}
+.chain-lookup input,.pending-transaction input{display:block;width:100%;min-width:0;background:#0c121b;border:1px solid #49576c;color:#fff;padding:10px;margin:12px 0;border-radius:6px;font-size:12px}
+.pending-transaction{border:1px solid #786831;padding:14px;margin-top:15px;border-radius:8px}
+.chain-results{border-top:1px solid #3c4656;margin-top:20px;padding-top:10px}.chain-results>a{display:flex;justify-content:space-between;gap:8px;color:#ffdf82;font-size:12px;padding:10px 0}.chain-results>a>span{display:flex;gap:6px;align-items:center}
+.chain-worker{padding:15px 0;border-bottom:1px solid #334154;display:grid;gap:10px}.chain-worker strong{display:flex;justify-content:space-between;gap:8px}.chain-worker strong span{color:#ffdf82}.chain-worker>a{display:flex;align-items:center;gap:8px;font-size:11px;color:#cddbef}.chain-proof{display:flex;align-items:center;gap:7px;font-size:12px;color:#bdeca3}
+.transaction-quote{display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:12px;margin:20px 0}.transaction-quote dd{color:#ffe397;overflow-wrap:anywhere}
+.onchain-panel{scroll-margin-top:25px}.onchain-panel>.section-heading>.career-status{color:#ffdf8a;background:#302a1a}
+@media(max-width:600px){.chain-actions{flex-direction:column}.chain-actions button{width:100%}.chain-worker strong{flex-wrap:wrap}.career-brand{letter-spacing:.4px}.presentation-app .header-meta{display:none}.network-link{font-size:10px;padding:5px 7px}.transaction-quote{grid-template-columns:1fr}.presentation-app .career-hero{padding-top:0}.presentation-app .avatar-stage{height:220px}}
+
+.mode-notice{display:flex;gap:12px;padding:14px 18px;background:#25251c;border:1px solid #52553b;border-radius:10px;margin-bottom:20px;font-size:12px;color:#c6c8aa}
+.mode-notice strong{white-space:nowrap;color:#e4edb9}
+.review-source{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0}
+.review-source label{display:flex;gap:12px;align-items:center;font-size:12px;color:#b3c2a7}
+.review-source select{background:#10161e;border:1px solid #49563d;border-radius:6px;padding:9px;color:#dae7c9;font-size:11px;max-width:280px}
+.generation-panel{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px;border:1px solid #344137;background:#161f1c;border-radius:9px}
+.generation-panel strong{font-size:14px;color:#cde49b}
+.generation-panel small{display:block;font-size:10px;color:#94a89a;margin-top:5px;overflow-wrap:anywhere}
+.generation-panel button{padding:11px;border:1px solid #607148;border-radius:6px;color:#d7e8ba;font-size:11px;white-space:nowrap}
+.scene-title{font-size:19px;font-weight:600;margin-top:8px}
+.scene-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.scene-buttons>button:not(.primary-button){display:flex;align-items:center;gap:7px;border:1px solid #3c4a39;border-radius:6px;padding:10px;color:#c4d5ad;font-size:11px}
+.manager-scene{display:flex;align-items:center;gap:24px;padding:25px 12px;margin:18px 0;border-bottom:1px solid #29323c}
+.manager-scene>div:first-child{flex-shrink:0}
+.manager-scene h2{font-size:18px;line-height:1.8;margin:10px 0}
+.manager-scene p{font-size:11px;color:#8d9aae}
+.history-section>h2{font-size:23px;margin:12px 0 20px}
+.delivered-reviews{display:grid;gap:12px}
+.delivered-reviews article{background:#10161f;border:1px solid #303c48;border-radius:9px;padding:18px}
+.delivered-reviews article>div{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.delivered-reviews h3{font-size:16px;margin:13px 0;color:#d6dfc8}
+.delivered-reviews p{font-size:13px;color:#aebccd;line-height:1.9}
+.export-reviews{display:inline-flex;align-items:center;gap:8px;padding:12px 0;font-size:11px;color:#c9ddad;overflow-wrap:anywhere}
+.demo-ledger>div{display:flex;justify-content:space-between;gap:14px;border-bottom:1px solid #2b3542;padding:12px 0;font-size:12px}
+.demo-ledger p{font-size:12px;color:#91a0b4}
+.demo-ledger strong{color:#c7d8ad}
+.demo-ledger small{color:#a89b79}
+.career-finale{margin:25px 0;padding:30px 25px;background:#202d21;border:1px solid #586a40;border-radius:14px}
+.career-finale h2{font-size:25px;color:#daedba;margin:12px 0}
+.career-finale p{font-size:13px;color:#acbca0;line-height:1.9}
+.career-finale strong{display:block;margin-top:18px;font-size:12px;color:#bdc6b1}
+.wallet-panel{border:1px solid #3a4556;background:#131b27;padding:22px;border-radius:12px;margin-top:30px}
+.wallet-panel .section-heading h2{display:flex;align-items:center;gap:9px;font-size:17px;margin:0}
+.wallet-panel>p,.wallet-panel details{font-size:12px;color:#92a2b9;margin-top:15px}
+.wallet-panel details p{margin-top:12px;line-height:1.9}
+.wallet-panel summary{cursor:pointer}
+.wallet-address{display:flex;flex-direction:column;gap:8px;background:#0f151e;padding:12px;border-radius:7px;overflow-wrap:anywhere}
+.wallet-address code{font-size:11px;color:#becbdc}
+.wallet-address strong{color:#cde49b;font-size:16px}
+.wallet-panel p.wallet-verified{display:flex;align-items:center;gap:9px;color:#cde49b}
+.wallet-error{color:#f0bf8d!important;font-size:12px;margin:12px 0;overflow-wrap:anywhere}
+.saved-entry{border-top:1px solid #2c3745;margin-top:12px;padding-top:12px;display:grid;grid-template-columns:1fr auto;font-size:10px;color:#b9c5d4}
+.saved-entry small{grid-column:1/-1;overflow-wrap:anywhere;color:#7f91aa;font-size:9px;margin-top:6px}
+.header-meta>a{padding:5px 8px;border:1px solid #364032;border-radius:4px;color:#cad8b6}
+.work-evidence>h3{margin:15px 0}
+.work-evidence>p{font-size:12px;color:#a8b6ca;margin-top:12px}
+@media(max-width:600px){.mode-notice{flex-direction:column;gap:5px;font-size:11px}
+.review-source{align-items:flex-start;flex-direction:column}
+.review-source label{display:flex;align-items:flex-start;flex-direction:column;gap:7px;width:100%}
+.review-source select{max-width:100%;width:100%}
+.generation-panel{align-items:stretch;flex-direction:column;gap:12px}
+.generation-panel button{white-space:normal}
+.scene-buttons{width:100%}
+.scene-buttons .primary-button{flex:1;white-space:normal}
+.manager-scene{gap:12px;padding:20px 0}
+.manager-scene h2{font-size:14px}
+.manager-scene p{font-size:10px}
+.manager-scene>div:first-child{width:75px;transform:scale(.8);transform-origin:left center}
+.manager-scene .eyebrow{font-size:8px;letter-spacing:1px}
+.wallet-panel{padding:16px}
+.wallet-panel .section-heading{align-items:flex-start;flex-direction:column}
+.wallet-panel .section-heading h2{font-size:16px}
+.career-finale h2{font-size:21px}
+.header-meta{gap:4px}
+.header-meta>span{display:none}
+.header-meta>a{font-size:9px}
+.delivered-reviews article{padding:12px}
+.delivered-reviews article>div{flex-wrap:wrap}
+.delivered-reviews p{font-size:12px}
+.work-evidence .career-status{white-space:normal}
+}
+

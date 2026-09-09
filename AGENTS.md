@@ -218,3 +218,50 @@ node -e "fetch('https://router-api.0g.ai/v1/models').then(r=>r.json()).then(d=>c
 # 3. 檢驗 ERC-8004 測試網鏈上合約
 node -e "fetch('https://evmrpc-testnet.0g.ai', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({jsonrpc:'2.0', method:'eth_getCode', params:['0x8004A818BFB912233c491871b3d84c89A494BD9e', 'latest'], id:1})}).then(r=>r.json()).then(d=>console.log('ERC-8004 Contract Exists:', d.result.length > 2))"
 ```
+
+## 8. Career v3 實作決策與驗證方式（2026-09-09）
+
+本節為使用者討論後的新決策，優先於前文舊 PoC 的「不使用 Storage／Agentic ID」選型。
+
+- 保留音樂評審展示：固定 15 秒合成小星星、預先準備的公開分析資料，文字模型不宣稱直接聽音訊。三位錄取 Worker 全部要求真實整合；第四位候選、Manager 選人及接受成果為明確標示的展示腳本。平台不評估評論品質。
+- 先完成一位主角的模型 A 真實種子工作，再讓三位 Worker 使用模型 B。主角必須維持同一 Agent ID。此處的版本指「此次工作的推論模型」，不代表 sealed framework 自身的控制模型或完整能力快照。提示詞／工具／資料的完整版本化是未來展望。
+- 第一階段公開非敏感成果，機密試工與端到端硬體 attestation 為後續階段。服務簽章、Compute provider 回應簽章與硬體 attestation 不得混稱。
+- 前端入口為 `src/PresentationApp.tsx`，預設為免錢包簡報；`?mode=chain` 才進入 `src/CareerApp.tsx` 的鏈上工作台。舊 `src/App.tsx` 與展示用 proof 元件保留但不再進入應用程式入口。禁止重新接回舊版隨機 proof、假 SETTLED 或前端 Router Key 邏輯。
+- 開發環境 Node >= 24（使用內建 `node:sqlite`）。`npm run dev` 同時啟動 Vite 5173 與本機 API 3001；`npm run server` 可獨立啟動 API。`npm run preview` 仍需另啟 API。
+- 驗證命令：`npm test`、`npm run build`、`git diff --check`。測試中的假 RPC／簽章 fixture 僅用於測試，不會載入 Demo。`npm run verify:career -- evidence.json` 使用匯出的單筆證據包直接查鏈與 Storage，不讀取平台資料庫。
+- 金鑰只放伺服器／sealed runtime 環境變數；Vite 只暴露 `PUBLIC_` 前綴。不要讀取、顯示或提交 `.env`。新設定範本在 `.env.example`。使用者已同意沿用現有 `VITE_ZG_ROUTER_API_KEY`：伺服器優先讀取 `ZG_ROUTER_API_KEY`，未設定時讀取舊欄位，僅於伺服器端使用，不複製或輸出內容。Agent runtime 同樣支援此相容欄位，最後才使用其 `OPENAI_API_KEY`。後續已在此 Key 對應的測試網 Router 完成三次真實推論，詳見 8.2；不得把測試網 Key 誤送到主網 Router。
+- 真實執行前需在 `.env` 安全配置 `CAREER_MANAGER_PRIVATE_KEY`、三位角色的 `CAREER_<ROLE>_AGENT_ID` 與 `CAREER_<ROLE>_URL`（HTTPS origin），並明確設定 `CAREER_ENABLE_TRANSACTIONS=1`。角色鍵為 PROFESSOR、ANTISOCIAL、NEARMISS。Manager 不得為 Worker owner／approved operator。
+- API 只監聽 loopback，限制 Host／Origin，寫入需要 CSRF token 及 UI 的明確支出確認。此版本是本機展示服務，不可直接暴露為公開多租戶服務。
+- 每筆 canonical feedback、proof attestation、Worker 付款都先持久化已簽署交易，才廣播。重試只重送同一 raw transaction。不可刪除 `.career-local/` 來重置失敗交易；必須先查鏈。工作同時只執行一筆，Manager 錢包不應由其他程序同時使用。
+- Storage 先保存預期 rootHash 與嘗試狀態，上傳中斷後僅重查同一 rootHash；若無法確認，不自動再次付費上傳。成果取回、feedback、attestation、付款全數核對後才增加 completed work 計數。
+- 歷史驗證使用紀錄的歷史區塊與鏈上 feedback 驗證事件，不把 proof 今日過期當成工作造假。需要 RPC archive state 及 Storage 可用性，不保證完全離線或永久資料可用。Compute 保存原始簽署文字及簽章，驗證時重查歷史 provider signer。
+- 固定 Galileo Agentic ID：`0x34493302287308f565CF3409DAAdEDF4C8895648`；VerifiedFeedbackRegistry：`0xc0c902666078774435429d1fdeb5b1b17d95d583`（唯讀查到 1.1.0）；canonical Reputation：`0x8004B663056A597Dffe9eCcC1965A193B7388713`。它們不是應用程式自建 Jury Dispatcher。
+- 簡報推論沿用原有測試網 Router（見 8.2）。鏈上工作台的獨立 Compute 驗證器目前仍固定主網合約與 RPC，不能拿測試網 provider 資料套用；其真實聯調仍待完成。不能把 Compute 計費宣稱為 Worker 報酬，也不能混淆 Router 儲值與錢包 Gas 餘額。
+- `agent/review-service.mjs` 是待安裝到三個 sealed Agent 的 loopback 服務，不是在一般本機 Node 執行就有 TEE。它透過 `$SEAL_SIGN_SOCK/services` 註冊 `/api/review`，不自行簽造 X-Agent-Proof。需設定 `JURY_WORKER_KEY`、`JURY_MANAGER_ADDRESS`、`JURY_ALLOWED_MODELS`、`ZG_ROUTER_API_KEY`（或 runtime 的 `OPENAI_API_KEY`），由 runtime 提供 `AGENT_SEAL` 與 `SEAL_SIGN_SOCK`。執行 `node agent/review-service.mjs`。程式和 `JURY_CACHE_DIR` 必須部署於框架允許的持久化路徑，並在 runtime 重啟時重新啟動／註冊。請勿覆蓋現有 Agent 的其他服務。
+- Agent 只接受 Manager 對固定任務的簽章授權，使用兩個允許的工作模型；同一 task 的結果快取避免重試時重複推論。不接受任意 prompt、任意 URL、任意簽章或交易代理服務。
+- 已完成三次帶金鑰的 Router 評論推論，但尚未完成三個真實 sealed runtime 的部署、Storage 上傳、feedback 或付款實測。部署、儲值、付費推論與鏈上交易需對具體操作取得使用者確認後才執行。
+- Storage SDK 固定 `1.2.11`，其 peer dependency 要求 ethers `6.13.1`。`npm audit` 仍有上游已知弱點；不可用 `--force`、略過 peer 檢查或放寬安全政策掩蓋。正式上線前必須處理／重新評估。完整 Compute SDK 已移除，Compute 驗證使用唯讀合約 ABI 與 ethers。
+
+### 8.1 反覆排練與真實配置保護
+
+- 使用者要求由開發代理自行驗證排版與 console，不能把驗證交給使用者。`npm run test:browser` 使用已安裝 Chrome 與 Playwright，覆蓋 1440／834／390／320px、音訊播放、抽屜、版本篩選、支出取消與每種尺寸三次唯讀重播。截圖保存於命令輸出的暫存目錄；瀏覽器專用 fixture 不寫入平台資料庫、不呼叫真實 Agent 或交易 API。`npm run test:browser -- --headed --live-only` 會開啟可見的 Chrome，只操作真實頁面、不攔截或模擬 API，完整播放音樂並檢查三位角色；若工作按鈕受配置限制，報告明確列出 fullWorkflow blocked，不當作端到端成功。
+- `npm run preflight:agents` 只檢查指定配置是否存在、公鑰地址、鏈上餘額、Agent 身分與 sandbox 報價，不輸出金鑰、不部署、不花費。不在對話中貼入 Owner／Manager 私鑰或 Router Key。
+- 真實 Agent 應部署一次並保存 agentId／sealId；暫停使用 stop，恢復使用 start；不要為了重新排練而 reset、重新 mint 或刪除履歷。停止 runtime 不會取消歷史鏈上紀錄。實際停止後的計費狀態仍須查 provider。
+- 工作建立請求使用持久 requestId 去重，瀏覽器 sessionStorage 保留尚未確定的建立意圖；重送不產生新工作。預設 `CAREER_MAX_LIVE_JOBS=1`，已有的一場三人工作可唯讀重播；新增真實工作需明確提高有限次數上限（1～10）並重新確認支出。次數上限不是 sandbox 持續租用費或 Router 帳戶的總金額上限。
+- 工作固定 Manager、Worker ID、端點與角色設定摘要；更换帳戶／身分／端點後禁止接續舊工作。資料庫預設路徑錨定專案，不隨 cwd 變動。已簽署交易不可覆寫，已確認狀態不可回退。第二個 API 實例必須先取得監聽埠，才可處理重啟恢復。
+- Worker 以 jobId＋角色＋Manager＋AgentSeal 識別同一任務，原子建立推論 claim 並保存 requestHash。同一 job 改模型／內容不能藉由不同 body hash 再扣一次。推論結果未保存就失敗／重啟時，保留未知狀態並回報 409，不自動重送付費推論。
+- Manager 在發出推論前保存嘗試與原始請求；恢復只允許讀取 Worker 已有快取（X-Jury-Cache-Only），即使容器快取遺失也不自動重新花錢。`JURY_CACHE_DIR` 必須明確指定已驗證持久化的絕對路徑。不能保證跨外部供應商的任意故障都可完全自動恢復；未知狀態需先查帳與既有回應，禁止以清除 claim／資料庫掩蓋。
+- 2026-09-09 唯讀查得 sandbox 建立費每個 0.06 Galileo 0G；每 CPU 每分鐘 0.001、每 GB RAM 每分鐘 0.0005。若每個配置 2 CPU／4 GB，三個建立費合計 0.18、持續運行合計 0.012 0G／分鐘，另計 mint／同步 Gas、Storage、Worker 報酬與 Router 推論。部署前應重新查價，不將此數字當成總費用保證。
+
+### 8.2 可播放簡報、真實推論與只讀部署
+
+- 使用者的總預算為約 5 Galileo 0G，測試盡量控制在 0.01 0G 以下，不得自動反覆儲值、部署、轉帳。sandbox 固定建立費並非可任意調小的轉帳金額。
+- 現有 `VITE_ZG_ROUTER_URL` 指向 `https://router-api-testnet.integratenetwork.work/v1`，可用聊天模型為 `qwen2.5-omni`（TeeTLS）。`server/presentation.mjs` 讓舊 Key 與舊 URL 成對使用；若設定新 `ZG_ROUTER_API_KEY`，則只使用對應 `ZG_ROUTER_URL` 或官方預設，避免跨環境誤送 Key。
+- 已真實取得三位評論：Professor Request ID `43e9c1e0-e9bc-4dfe-a37e-39f556c3dc1f`、Anti-Social `e199da9a-66c4-49f4-b227-61240596bd19`、Near-Miss `903be06c-deaf-4f2b-886d-c650a3ab9c19`。Router 回報費用分別為 0.00062093、0.00049571、0.00065431 0G，合計 0.00177095；不得將此敘述為已驗證的 Worker 鏈上付款。
+- 真實結果保存在既有 SQLite 的獨立 presentation 表，不寫入鏈上 career jobs。首次建立批次使用原子 INSERT 去重，最多三次請求，每次 400 輸出 tokens；送出前按公開 neuron 定價保守估算 ≤0.01 0G，並附 USD 單價上限標頭。任何錯誤／不明結果都停止，不能刪除紀錄後偷偷重試。若要重新生成，必須另獲明確支出授權與恢復設計。
+- 預設簡報有九幕：發布、應徵、舊履歷示例、錄取、播放、評論、接受、模擬付款、展示履歷成長。來源可選保存的真實 AI 回應或清楚標示的範例；模擬資料不能進入 Verified Work 計數，不生成假 tx hash、rootHash 或 AgentSeal。
+- `npm run test:presentation -- --headed` 使用可見 Chrome 測試目前已保存的真實資料、完整九幕、下載、手機抽屜和兩次無新增請求的重播。不加 `--allow-paid` 不會取得新評論。`--allow-paid` 只限明確授權的首次取得；已有保存紀錄時仍不會再付費。這不是三個真實 sealed Agent 的鏈上端到端測試。
+- MetaMask 元件可連接／切換 Galileo、查餘額、完成兩分鐘有效的一次性 personal_sign challenge。此簽署只證明帳戶控制權，不授權支付，也不是 Agent 部署流程。仍需實作／聯調正式的瀏覽器部署與交易簽署入口；不能因使用者裝好 MetaMask 就宣稱已具備伺服器簽署帳戶。
+- `npm run build:demo` 產生 `dist-demo/`：只有編譯過的只讀前端、三份公開回應 JSON 與自行合成音樂，不含 API Key、私鑰、資料庫或後端，不複製舊 public 目錄裡的其他音樂。必須已有三份真實評論才可建置。公開版不呼叫付費 API，錢包只可連接／查餘額。
+- `npm run preview:demo` 在 4174 啟動只讀產物。以 `CAREER_BROWSER_URL=http://127.0.0.1:4174` 搭配 `npm run test:presentation -- --headed --static` 驗證部署產物；`--static` 從 presentation.json 讀取，不依賴本機 API。
+- 公開託管目前選擇準備 Vercel 靜態部署，但 CLI 登入失效，已請使用者執行 `vercel login`；未登入前不可宣稱已有公開服務網址。只部署 dist-demo，不要上傳根目錄或任何秘密檔案。完整後端與鏈上部署仍是另外的待辦，不得被只讀網站部署掩蓋。

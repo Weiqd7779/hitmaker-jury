@@ -4,18 +4,37 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "vite",
+    "predev": "node scripts/compile-contracts.mjs",
+    "dev": "node --env-file-if-exists=.env scripts/dev.mjs",
+    "contracts:compile": "node scripts/compile-contracts.mjs",
+    "contracts:check": "node scripts/check-chain-flow.mjs",
+    "verify:erc8004": "node scripts/verify-erc8004.mjs",
+    "deploy:galileo": "node --env-file-if-exists=.env scripts/deploy-galileo.mjs",
+    "dev:ui": "vite",
+    "server": "node --env-file-if-exists=.env server/index.mjs",
     "build": "tsc && vite build",
+    "build:demo": "tsc && node scripts/build-demo.mjs",
+    "preview:demo": "node scripts/preview-demo.mjs",
+    "preview:demo": "node scripts/preview-demo.mjs",
+    "test:presentation": "node tests/presentation-browser.mjs",
     "preview": "vite preview",
-    "test:0g": "node scripts/test-0g.js"
+    "test": "node --test tests/*.test.mjs",
+    "test:browser": "node tests/browser.mjs",
+    "preflight:agents": "node --env-file-if-exists=.env scripts/deployment-preflight.mjs",
+    "verify:career": "node scripts/verify-career.mjs",
+    "test:0g": "node scripts/check-0g.mjs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
   "dependencies": {
+    "@0gfoundation/0g-storage-ts-sdk": "1.2.11",
     "canvas-confetti": "^1.9.4",
-    "ethers": "^6.17.0",
+    "ethers": "6.13.1",
     "lucide-react": "^1.41.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
@@ -27,7 +46,10 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "autoprefixer": "^10.5.5",
+    "hardhat": "2.26.3",
+    "playwright": "1.58.2",
     "postcss": "^8.5.28",
+    "solc": "0.8.26",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"
