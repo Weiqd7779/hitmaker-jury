@@ -340,12 +340,3 @@ npm run verify:erc8004 -- MANAGER_ADDRESS MANIFEST_URL   # 驗證鏈上狀態
 
 ---
 
-## 授權
-
-MIT
-
----
-
-## 致謝
-
-本專案基於 0G 的 Compute、Chain 與 ERC-8004 Identity/Reputation 基礎設施建構。感謝 0G 官方文件與 Galileo 測試網的即時連通性支援。
